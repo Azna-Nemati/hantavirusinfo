@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HantavirusInfo — Public Health Resource</title>
+<meta name="description" content="Accurate, evidence-based public health information about hantavirus prevention, symptoms, and treatment." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --persian-green:#00a693;--persian-green-dark:#007f72;--persian-green-darker:#005f55;
+  --persian-green-light:#e6f7f5;--persian-green-mid:#b3e5e0;--mint:#f0faf9;
+  --off-black:#1a2a28;--dark-gray:#2d3d3b;--medium-gray:#5a6e6c;--light-gray:#e8eeee;--white:#fff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{-webkit-font-smoothing:antialiased;background:var(--white);color:var(--off-black);font-family:'DM Sans',-apple-system,sans-serif;line-height:1.5}
+h1,h2,h3,.serif{font-family:'DM Serif Display',Georgia,serif}
+img,svg{display:block;vertical-align:middle}
+ul{list-style:none}
+a{color:inherit;text-decoration:none}
+em{font-style:italic}
+
+.btn-primary{background:var(--persian-green);color:#fff;letter-spacing:.02em;cursor:pointer;border:none;border-radius:8px;align-items:center;gap:.5rem;padding:.75rem 1.5rem;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:600;transition:background .2s,transform .1s;display:inline-flex}
+.btn-primary:hover{background:var(--persian-green-dark);transform:translateY(-1px)}
+.btn-outline{color:var(--persian-green);letter-spacing:.02em;border:2px solid var(--persian-green);cursor:pointer;background:0 0;border-radius:8px;align-items:center;gap:.5rem;padding:.75rem 1.5rem;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:600;transition:background .2s,color .2s;display:inline-flex}
+.btn-outline:hover{background:var(--persian-green-light)}
+.card{border:1px solid var(--light-gray);background:#fff;border-radius:12px;transition:box-shadow .2s,transform .2s;overflow:hidden}
+.card:hover{transform:translateY(-2px);box-shadow:0 8px 32px #00a6931f}
+.section-tag{background:var(--persian-green-light);color:var(--persian-green-darker);letter-spacing:.08em;text-transform:uppercase;border-radius:100px;margin-bottom:1rem;padding:.375rem .875rem;font-size:.75rem;font-weight:700;display:inline-block}
+.timeline-dot{background:var(--persian-green);width:14px;height:14px;box-shadow:0 0 0 4px var(--persian-green-light);border-radius:50%;flex-shrink:0;margin-top:3px}
+.timeline-line{background:var(--persian-green-mid);flex:1;width:2px;min-height:32px}
+
+/* nav */
+.nav-header{background:#fff;border-bottom:1px solid #e8eeee;position:sticky;top:0;z-index:50;box-shadow:0 1px 12px rgba(0,0,0,.06)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo-mark{width:36px;height:36px;background:var(--persian-green);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nav-link{color:var(--dark-gray);letter-spacing:.01em;border-radius:6px;padding:.375rem .75rem;font-size:.925rem;font-weight:500;transition:background .15s,color .15s;cursor:pointer}
+.nav-link:hover,.nav-link.active{color:var(--persian-green-dark);background:var(--persian-green-light)}
+.desktop-nav{display:none;align-items:center;gap:.25rem}
+.hamburger{display:flex;background:none;border:none;cursor:pointer;padding:.5rem;color:var(--off-black)}
+@media(min-width:768px){.desktop-nav{display:flex}.hamburger{display:none}}
+
+/* mobile menu */
+.mobile-menu-overlay{z-index:100;opacity:0;visibility:hidden;background:#00000080;transition:opacity .3s,visibility .3s;position:fixed;inset:0}
+.mobile-menu-overlay.open{opacity:1;visibility:visible}
+.mobile-menu-panel{background:var(--persian-green);flex-direction:column;width:100%;max-width:320px;transition:transform .3s;display:flex;position:fixed;top:0;bottom:0;right:0;transform:translateX(100%);padding:1.5rem}
+.mobile-menu-panel.open{transform:translateX(0)}
+#mobileNav{display:flex;flex-direction:column}
+.mobile-menu-panel a{display:block;width:100%;color:#fff;padding:.9rem .5rem;font-size:1.05rem;font-weight:600;border-bottom:1px solid rgba(255,255,255,.15)}
+.mobile-menu-panel a.active{opacity:1}
+.mobile-menu-close{background:rgba(255,255,255,.15);border:none;color:#fff;width:40px;height:40px;border-radius:8px;cursor:pointer;align-self:flex-end;margin-bottom:1rem;display:flex;align-items:center;justify-content:center}
+@media(min-width:768px){.mobile-menu-overlay{display:none!important}}
+
+/* interactive */
+.symptom-item{border:1.5px solid var(--light-gray);cursor:pointer;user-select:none;border-radius:10px;align-items:center;gap:.875rem;padding:.875rem 1rem;transition:border-color .15s,background .15s;display:flex}
+.symptom-item:hover{border-color:var(--persian-green-mid);background:var(--mint)}
+.symptom-item.checked{border-color:var(--persian-green);background:var(--persian-green-light)}
+.accordion-header{cursor:pointer;color:var(--dark-gray);border-radius:10px;justify-content:space-between;align-items:center;padding:1.125rem 1.25rem;font-weight:600;transition:background .15s;display:flex}
+.accordion-header:hover{background:var(--mint)}
+.accordion-content{color:var(--medium-gray);padding:0 1.25rem 1.25rem;line-height:1.7}
+
+/* emergency CTA: stack on mobile, side-by-side on desktop */
+.emergency-cta{grid-template-columns:1fr}
+@media(min-width:768px){.emergency-cta{grid-template-columns:1fr auto}}
+@media(max-width:767px){
+  .emergency-cta{padding:2rem 1.5rem}
+  .emergency-cta .btn-primary{white-space:normal!important;text-align:center}
+}
+/* never let buttons/text blow past the screen edge */
+.btn-primary,.btn-outline{max-width:100%}
+
+@media print{.no-print,.nav-header{display:none!important}body{font-size:12pt}h1,h2,h3{color:var(--persian-green-darker)!important}}
+</style>
+</head>
+<body>
+
+<header class="nav-header no-print">
+  <div class="nav-inner">
+    <a href="#/" class="logo-link" style="display:flex;align-items:center;gap:.625rem">
+      <div class="logo-mark">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+      </div>
+      <div>
+        <div style="font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--off-black);line-height:1.1">HantavirusInfo</div>
+        <div style="font-size:.68rem;color:var(--medium-gray);letter-spacing:.04em;text-transform:uppercase;font-weight:600">Public Health Resource</div>
+      </div>
+    </a>
+    <nav class="desktop-nav" id="desktopNav"></nav>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Open menu">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-menu-overlay" id="mobileOverlay">
+  <div class="mobile-menu-panel" id="mobilePanel">
+    <button class="mobile-menu-close" id="mobileClose" aria-label="Close menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div id="mobileNav"></div>
+  </div>
+</div>
+
+<div id="app"></div>
+
+<footer style="background:var(--off-black);color:#fff;margin-top:5rem" class="no-print">
+  <div style="max-width:1200px;margin:0 auto;padding:3.5rem 1.5rem 2.5rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2.5rem">
+    <div>
+      <div style="display:flex;align-items:center;gap:.625rem;margin-bottom:1rem">
+        <div style="width:32px;height:32px;background:var(--persian-green);border-radius:8px;display:flex;align-items:center;justify-content:center">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <span style="font-family:'DM Serif Display',serif;font-size:1rem;color:#fff">HantavirusInfo</span>
+      </div>
+      <p style="font-size:.85rem;color:#9ab0ae;line-height:1.7">A public health resource providing accurate, evidence-based information about hantavirus prevention, symptoms, and treatment.</p>
+      <div style="margin-top:1.25rem">
+        <div style="font-weight:700;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--persian-green);margin-bottom:.625rem">Contact</div>
+        <a href="mailto:contact@hantavirusinfo.com" style="color:#9ab0ae;font-size:.875rem;display:inline-flex;align-items:center;gap:.5rem">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--persian-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+          contact@hantavirusinfo.com
+        </a>
+      </div>
+    </div>
+    <div>
+      <div style="font-weight:700;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--persian-green);margin-bottom:1rem">Information</div>
+      <a href="#/" class="foot-link">Overview</a>
+      <a href="#/about" class="foot-link">About Hantavirus</a>
+      <a href="#/prevention" class="foot-link">Prevention Guide</a>
+      <a href="#/news" class="foot-link">News &amp; Updates</a>
+    </div>
+    <div>
+      <div style="font-weight:700;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--persian-green);margin-bottom:1rem">Resources</div>
+      <a href="#/resources" class="foot-link">Fact Sheets</a>
+      <a href="#/resources" class="foot-link">Healthcare Providers</a>
+      <a href="#/resources" class="foot-link">Research Papers</a>
+      <a href="#/contact" class="foot-link">Contact Us</a>
+    </div>
+    <div>
+      <div style="font-weight:700;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--persian-green);margin-bottom:1rem">Official Resources</div>
+      <a href="https://www.cdc.gov/hantavirus/" target="_blank" rel="noopener noreferrer" class="foot-link">CDC Hantavirus Info</a>
+      <a href="https://www.who.int/emergencies/disease-outbreak-news" target="_blank" rel="noopener noreferrer" class="foot-link">WHO Disease Outbreak News</a>
+      <a href="https://www.nih.gov/health-information" target="_blank" rel="noopener noreferrer" class="foot-link">NIH Health Information</a>
+    </div>
+  </div>
+  <div style="border-top:1px solid rgba(255,255,255,.08);padding:1.25rem 1.5rem">
+    <div style="max-width:1200px;margin:0 auto">
+      <div style="font-size:.78rem;color:#6a8a88;margin-bottom:.75rem">© 2026 HantavirusInfo. For informational purposes only. Always consult a healthcare professional.</div>
+      <p style="font-size:.76rem;color:#5a7a78;line-height:1.7">This website provides educational information only and is not a substitute for professional medical advice, diagnosis, or treatment. Information may not reflect the most current medical research. Always consult qualified healthcare professionals for medical concerns.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+.foot-link{display:block;color:#9ab0ae;font-size:.875rem;margin-bottom:.5rem;transition:color .15s}
+.foot-link:hover{color:#fff}
+</style>
+
+<script>
+/* ---------- data ---------- */
+const NAV = [
+  {to:"#/",label:"Home"},
+  {to:"#/about",label:"About Hantavirus"},
+  {to:"#/prevention",label:"Prevention"},
+  {to:"#/news",label:"News & Updates"},
+  {to:"#/resources",label:"Resources"},
+  {to:"#/contact",label:"Contact"}
+];
+
+/* ---------- small helpers ---------- */
+const h = (s)=>s; // identity, keeps template strings readable
+
+/* ---------- HOME ---------- */
+function homePage(){
+  const stats=[
+    {val:"~36%",label:"Case fatality rate (US)",note:"Without early treatment"},
+    {val:"850+",label:"US cases since 1993",note:"Confirmed by CDC"},
+    {val:"4–8 wks",label:"Incubation period",note:"From exposure to symptoms"},
+    {val:"35+",label:"US states affected",note:"Including Western states"}
+  ];
+  const transmission=[
+    {icon:"💨",label:"Airborne Particles",desc:"Breathing dust from rodent droppings or urine — most common route"},
+    {icon:"🖐️",label:"Direct Contact",desc:"Touching rodents or contaminated surfaces, then touching face"},
+    {icon:"🐀",label:"Rodent Bites",desc:"Rare — being bitten by an infected rodent"}
+  ];
+  const prevention=[
+    {num:"01",title:"Seal Your Home",desc:"Fill cracks and gaps in walls, roofs, and foundations to keep rodents out. Steel wool + caulk work best.",color:"var(--persian-green)"},
+    {num:"02",title:"Store Food Securely",desc:"Use metal or thick plastic containers with tight-fitting lids. Never leave pet food out overnight.",color:"var(--persian-green-dark)"},
+    {num:"03",title:"Ventilate Before Cleaning",desc:"Open windows and doors for 30+ minutes before cleaning areas with rodent activity.",color:"var(--persian-green-darker)"},
+    {num:"04",title:"Wear Protective Gear",desc:"Use gloves and a properly fitted N95 respirator when working in rodent-infested areas.",color:"#005048"},
+    {num:"05",title:"Wet Before Sweeping",desc:"Never dry sweep. Spray droppings with bleach solution (1:10) before wiping up.",color:"var(--persian-green)"},
+    {num:"06",title:"Trap & Remove",desc:"Use snap traps in areas of rodent activity. Dispose of dead rodents safely in sealed bags.",color:"var(--persian-green-dark)"}
+  ];
+  const explore=[
+    {tag:"Disease Information",title:"Understanding Hantavirus",desc:"Learn about symptoms, transmission, and the science behind hantavirus disease.",to:"#/about"},
+    {tag:"Prevention",title:"Prevention & Safety Guidelines",desc:"Evidence-based guidelines to protect yourself and your home from hantavirus exposure.",to:"#/prevention"},
+    {tag:"Resources",title:"Official Resources",desc:"Access fact sheets, healthcare provider guidance, and links to authoritative sources.",to:"#/resources"}
+  ];
+  return `
+  <main>
+    <section style="background:linear-gradient(135deg,var(--persian-green-darker) 0%,var(--persian-green) 60%,#00c4ae 100%);color:#fff;padding:4.5rem 1.5rem 5rem;position:relative;overflow:hidden">
+      <div style="position:absolute;top:-80px;right:-80px;width:400px;height:400px;border-radius:50%;background:rgba(255,255,255,.05)"></div>
+      <div style="position:absolute;bottom:-120px;left:-60px;width:350px;height:350px;border-radius:50%;background:rgba(255,255,255,.04)"></div>
+      <div style="max-width:900px;margin:0 auto;position:relative">
+        <div style="display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.15);border-radius:100px;padding:.375rem .875rem;margin-bottom:1.5rem;font-size:.8rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg> Public Health Information
+        </div>
+        <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(2.25rem,5vw,3.5rem);line-height:1.12;margin:0 0 1.25rem;font-weight:400;letter-spacing:-.01em">Hantavirus: Know the Signs,<br><em>Stay Protected</em></h1>
+        <p style="font-size:clamp(1rem,2vw,1.2rem);line-height:1.7;margin:0 0 2rem;max-width:680px;opacity:.92">Hantavirus is a rare but serious respiratory disease transmitted through contact with infected rodents. Early recognition and prevention are critical to protecting yourself and your community.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:.875rem">
+          <a href="#/prevention" class="btn-primary" style="background:#fff;color:var(--persian-green-darker);font-weight:700">Prevention Guide</a>
+          <a href="#/about" class="btn-outline" style="border-color:rgba(255,255,255,.6);color:#fff">Learn About Hantavirus</a>
+        </div>
+      </div>
+    </section>
+
+    <section style="background:var(--mint);border-bottom:1px solid var(--light-gray);padding:2rem 1.5rem">
+      <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1.25rem">
+        ${stats.map(s=>`<div style="text-align:center;padding:1rem">
+          <div style="font-family:'DM Serif Display',serif;font-size:2rem;color:var(--persian-green);line-height:1">${s.val}</div>
+          <div style="font-weight:600;font-size:.875rem;color:var(--dark-gray);margin-top:.375rem">${s.label}</div>
+          <div style="font-size:.75rem;color:var(--medium-gray);margin-top:.25rem">${s.note}</div>
+        </div>`).join("")}
+      </div>
+    </section>
+
+    <div style="max-width:1200px;margin:0 auto;padding:4rem 1.5rem">
+      <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:4rem;align-items:center;margin-bottom:5rem">
+        <div>
+          <div class="section-tag">What Is It</div>
+          <h2 style="font-family:'DM Serif Display',serif;font-size:clamp(1.75rem,3vw,2.25rem);margin:0 0 1.125rem;color:var(--off-black)">Understanding Hantavirus</h2>
+          <p style="color:var(--medium-gray);line-height:1.75;margin-bottom:1rem">Hantaviruses are a family of RNA viruses carried by rodents, primarily deer mice (<em>Peromyscus maniculatus</em>) in North America. Humans become infected by breathing air contaminated with virus particles from rodent urine, droppings, or nesting materials.</p>
+          <p style="color:var(--medium-gray);line-height:1.75;margin-bottom:1.5rem">The most serious form in the US is Hantavirus Pulmonary Syndrome (HPS), which causes severe respiratory illness and can be fatal without prompt medical care.</p>
+          <a href="#/about" class="btn-primary">Learn More</a>
+        </div>
+        <div>
+          <div style="background:var(--persian-green-light);border-radius:16px;padding:2rem">
+            <div style="font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;color:var(--persian-green-darker);margin-bottom:1.25rem">Transmission Methods</div>
+            ${transmission.map(t=>`<div style="display:flex;gap:.875rem;padding:.875rem 0;border-bottom:1px solid var(--persian-green-mid)">
+              <div style="font-size:1.25rem;flex-shrink:0">${t.icon}</div>
+              <div><div style="font-weight:600;font-size:.9rem;color:var(--off-black);margin-bottom:.25rem">${t.label}</div>
+              <div style="font-size:.82rem;color:var(--medium-gray);line-height:1.5">${t.desc}</div></div>
+            </div>`).join("")}
+            <div style="margin-top:1rem;padding:.875rem;background:#fff;border-radius:10px;font-size:.82rem;color:var(--medium-gray)"><strong style="color:var(--persian-green-darker)">Important:</strong> Hantavirus does <em>not</em> spread from person to person (except in rare cases with Andes virus).</div>
+          </div>
+        </div>
+      </section>
+
+      <section style="margin-bottom:5rem">
+        <div class="section-tag">Interactive Tool</div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem">
+          <h2 style="font-family:'DM Serif Display',serif;font-size:clamp(1.75rem,3vw,2.25rem);margin:0;color:var(--off-black)">Symptom Checker</h2>
+          <p style="margin:0;font-size:.85rem;color:var(--medium-gray);max-width:400px">Select any symptoms you're experiencing. This is not a medical diagnosis — seek professional care.</p>
+        </div>
+        <div style="border:1.5px solid var(--light-gray);border-radius:16px;padding:1.75rem">
+          <div id="symptomGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:.625rem;margin-bottom:1.5rem"></div>
+          <div id="symptomResult"></div>
+        </div>
+      </section>
+
+      <section style="margin-bottom:5rem">
+        <div class="section-tag">Stay Safe</div>
+        <h2 style="font-family:'DM Serif Display',serif;font-size:clamp(1.75rem,3vw,2.25rem);margin:0 0 2rem;color:var(--off-black)">Prevention at a Glance</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.25rem">
+          ${prevention.map(p=>`<div class="card" style="padding:1.5rem">
+            <div style="font-family:'DM Serif Display',serif;font-size:2.5rem;color:var(--persian-green-light);font-weight:400;line-height:1;margin-bottom:.75rem">${p.num}</div>
+            <h3 style="margin:0 0 .5rem;font-size:1rem;font-weight:700;color:${p.color}">${p.title}</h3>
+            <p style="margin:0;font-size:.85rem;color:var(--medium-gray);line-height:1.65">${p.desc}</p>
+          </div>`).join("")}
+        </div>
+        <div style="text-align:center;margin-top:2rem"><a href="#/prevention" class="btn-outline">Full Prevention Guide →</a></div>
+      </section>
+
+      <section style="margin-bottom:5rem">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem">
+          <div>
+            <div class="section-tag">Learn More</div>
+            <h2 style="font-family:'DM Serif Display',serif;font-size:clamp(1.75rem,3vw,2.25rem);margin:.5rem 0 0;color:var(--off-black)">Explore Hantavirus Information</h2>
+            <p style="margin:.5rem 0 0;font-size:.9rem;color:var(--medium-gray);max-width:600px">Educational resources to help you understand, prevent, and respond to hantavirus</p>
+          </div>
+          <a href="#/news" style="color:var(--persian-green);font-weight:600;font-size:.9rem">View All Resources →</a>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem">
+          ${explore.map(c=>`<div class="card" style="padding:1.5rem">
+            <div style="margin-bottom:.875rem"><span style="background:var(--persian-green-light);color:var(--persian-green-darker);font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:.25rem .625rem;border-radius:100px">${c.tag}</span></div>
+            <h3 style="margin:0 0 .625rem;font-size:1rem;font-weight:700;color:var(--off-black);line-height:1.4">${c.title}</h3>
+            <p style="margin:0;font-size:.83rem;color:var(--medium-gray);line-height:1.65">${c.desc}</p>
+            <a href="${c.to}" style="display:inline-flex;align-items:center;gap:.25rem;margin-top:1rem;color:var(--persian-green);font-size:.83rem;font-weight:600">Read More →</a>
+          </div>`).join("")}
+        </div>
+      </section>
+
+      <section class="emergency-cta" style="background:linear-gradient(135deg,var(--persian-green-darker),var(--persian-green));border-radius:20px;padding:3rem 2.5rem;color:#fff;display:grid;gap:2rem;align-items:center">
+        <div>
+          <div style="font-family:'DM Serif Display',serif;font-size:clamp(1.5rem,3vw,2rem);margin-bottom:.75rem">When to Seek Emergency Care</div>
+          <p style="margin:0 0 1rem;opacity:.92;line-height:1.65;font-size:.95rem">If you have been in areas with rodent activity in the past 6 weeks AND develop fever, severe muscle aches, or breathing difficulty — go to an emergency room immediately.</p>
+          <div style="font-size:.82rem;opacity:.8">Tell the doctor about any potential rodent exposure. Early intervention is critical.</div>
+        </div>
+        <div style="text-align:center;flex-shrink:0"><a href="https://www.cdc.gov/hantavirus/" target="_blank" rel="noopener noreferrer" class="btn-primary" style="background:#fff;color:var(--persian-green-darker);font-weight:700;font-size:.95rem;white-space:nowrap">Visit CDC.gov for More Information</a></div>
+      </section>
+    </div>
+  </main>`;
+}
+
+const SYMPTOMS=["Fatigue and tiredness","Fever (above 101°F / 38.3°C)","Muscle aches (thighs, hips, back)","Headaches","Dizziness","Chills","Abdominal problems (nausea, vomiting)","Coughing with fluid in lungs","Shortness of breath"];
+let checked=new Set();
+function renderSymptoms(){
+  const grid=document.getElementById("symptomGrid");
+  if(!grid)return;
+  grid.innerHTML=SYMPTOMS.map((n,t)=>`<div class="symptom-item ${checked.has(t)?"checked":""}" data-i="${t}" role="checkbox" aria-checked="${checked.has(t)}">
+    <div style="width:20px;height:20px;border-radius:6px;flex-shrink:0;border:2px solid ${checked.has(t)?"var(--persian-green)":"var(--light-gray)"};background:${checked.has(t)?"var(--persian-green)":"transparent"};display:flex;align-items:center;justify-content:center">
+      ${checked.has(t)?'<svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><polyline points="2,6 5,9 10,3"/></svg>':""}
+    </div>
+    <span style="font-size:.88rem;color:var(--dark-gray);font-weight:${checked.has(t)?600:400}">${n}</span>
+  </div>`).join("");
+  grid.querySelectorAll(".symptom-item").forEach(el=>{
+    el.onclick=()=>{const i=+el.dataset.i; checked.has(i)?checked.delete(i):checked.add(i); renderSymptoms();};
+  });
+  const s=checked.size;
+  const level=[7,8].some(n=>checked.has(n))?"high":s>=4?"moderate":s>=2?"low":"none";
+  const res=document.getElementById("symptomResult");
+  if(level==="none"){res.innerHTML="";return;}
+  const bg=level==="high"?"#fef2f2":level==="moderate"?"#fffbeb":"var(--persian-green-light)";
+  const bl=level==="high"?"#ef4444":level==="moderate"?"#f59e0b":"var(--persian-green)";
+  const tc=level==="high"?"#dc2626":level==="moderate"?"#d97706":"var(--persian-green-darker)";
+  const title=level==="high"?"Seek Emergency Care Immediately":level==="moderate"?"Contact a Doctor Today":"Monitor Symptoms Closely";
+  const body=level==="high"?"Breathing difficulty and cough with lung fluid are critical hantavirus symptoms. Go to the nearest emergency room now. Tell them you may have been exposed to rodents.":level==="moderate"?"You have several early hantavirus symptoms. Contact your doctor or urgent care immediately and mention any possible rodent exposure in the past 6 weeks.":"Some mild symptoms present. Rest, hydrate, and monitor. If symptoms worsen or you had rodent exposure, contact a healthcare provider.";
+  res.innerHTML=`<div style="padding:1.125rem 1.25rem;border-radius:10px;background:${bg};border-left:4px solid ${bl}">
+    <div style="font-weight:700;margin-bottom:.375rem;color:${tc}">${title}</div>
+    <div style="font-size:.875rem;color:var(--dark-gray);line-height:1.6">${body}</div>
+    ${level==="high"?'<a href="https://www.cdc.gov/hantavirus/" class="btn-primary" target="_blank" rel="noopener noreferrer" style="margin-top:.875rem;background:#dc2626;font-size:.85rem">Seek Emergency Care Now</a>':""}
+  </div>`;
+}
+
+/* ---------- ABOUT ---------- */
+function aboutPage(){
+  const keyfacts=[["First identified","1993 — Four Corners region"],["Primary US strain","Sin Nombre virus"],["Primary reservoir","Deer mouse (P. maniculatus)"],["Case fatality rate","~36% (US, historical)"],["Annual US cases","~20–40 confirmed"],["Highest risk states","Colorado, New Mexico, California, Texas"]];
+  const timeline=[
+    {phase:"Incubation Period",range:"1–8 weeks after exposure",color:"var(--persian-green-light)",textColor:"var(--persian-green-darker)",symptoms:["No symptoms present","Virus replicating in body","Person is not contagious"],severity:"None"},
+    {phase:"Early (Prodromal) Phase",range:"Days 1–5 of illness",color:"#fef9eb",textColor:"#92400e",symptoms:["Fever (101–104°F / 38.3–40°C)","Fatigue and malaise","Muscle aches (myalgia), especially hips, thighs, back","Headache","Dizziness","Chills","Nausea, vomiting, diarrhea (sometimes)"],severity:"Moderate"},
+    {phase:"Cardiopulmonary Phase",range:"Days 5–10 (onset 4–10 days after fever)",color:"#fff1f2",textColor:"#9f1239",symptoms:["Cough (initially dry, may become productive)","Shortness of breath (dyspnea)","Rapid breathing (tachypnea)","Fluid accumulation in lungs (pulmonary edema)","Falling blood pressure","Heart rhythm irregularities","Shock may develop"],severity:"Critical"},
+    {phase:"Recovery Phase",range:"Days 10–30+ (survivors)",color:"var(--persian-green-light)",textColor:"var(--persian-green-darker)",symptoms:["Rapid improvement in lung function","Breathing normalizes","Fatigue may persist weeks to months","No long-term lung damage in most survivors"],severity:"Improving"}
+  ];
+  const faqs=[
+    {q:"Can hantavirus spread from person to person?",a:"In North America, hantavirus (Sin Nombre virus causing HPS) does NOT spread from person to person. The only known exception is the Andes virus in South America, which has caused rare cases of person-to-person transmission. You cannot get hantavirus from someone who is sick."},
+    {q:"How long after exposure do symptoms appear?",a:"The incubation period for HPS is typically 1–8 weeks after exposure to infected rodent material, with most people developing symptoms within 2–4 weeks. This prolonged incubation period means people often do not associate their illness with the exposure."},
+    {q:"Is there a vaccine or cure for hantavirus?",a:"There is currently no FDA-approved vaccine or specific antiviral treatment for hantavirus in the United States. Treatment is supportive: intensive care, oxygen therapy, and sometimes mechanical ventilation. Early hospitalization significantly improves survival rates."},
+    {q:"Which rodents carry hantavirus?",a:"In the US, the primary reservoir is the deer mouse (Peromyscus maniculatus). Other rodents can also carry hantaviruses including the white-footed mouse, cotton rat, and rice rat. Each rodent species carries a specific strain of hantavirus."},
+    {q:"Can pets (dogs/cats) get or transmit hantavirus?",a:"Dogs and cats do not appear to get sick from hantavirus and are not known to transmit it to humans. However, pets that roam outdoors and hunt rodents could bring infected rodents into the home, indirectly increasing exposure risk."},
+    {q:"What should I do if I find rodents in my home?",a:"Ventilate the area for 30+ minutes, wear rubber gloves and an N95 respirator, wet contaminated areas with bleach solution (1 part bleach to 9 parts water) before cleaning, and use damp cloths or mops — never dry sweep. Seal entry points after elimination."}
+  ];
+  const diag=[
+    {title:"Laboratory Diagnosis",body:"Diagnosis is confirmed through serology (IgM/IgG antibodies), PCR testing on blood, or immunohistochemistry on tissue. Early HPS can look like influenza — mention rodent exposure to your doctor. Chest X-rays reveal characteristic bilateral infiltrates in the lungs."},
+    {title:"Supportive Treatment",body:"There is no specific antiviral treatment for HPS. Patients require intensive care including supplemental oxygen, mechanical ventilation, and careful fluid management. ECMO (extracorporeal membrane oxygenation) has been used in severe cases to support heart and lung function."},
+    {title:"Early Intervention Matters",body:"Patients who are hospitalized early — before respiratory failure — have significantly better outcomes. Ribavirin has been studied but has not shown clear benefit in clinical trials. Research into specific antivirals continues at CDC and NIH."}
+  ];
+  const sources=["CDC — Hantavirus Pulmonary Syndrome (HPS)","NIH — National Institute of Allergy and Infectious Diseases","WHO — Hantavirus disease fact sheet","MMWR — Hantavirus Surveillance, United States","New England Journal of Medicine — HPS clinical reviews","American Journal of Tropical Medicine"];
+  return `
+  <main>
+    <section style="background:var(--mint);border-bottom:1px solid var(--persian-green-mid);padding:3.5rem 1.5rem">
+      <div style="max-width:900px;margin:0 auto">
+        <div class="section-tag">Medical Information</div>
+        <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(2rem,4vw,3rem);margin:.5rem 0 1rem;color:var(--off-black)">About Hantavirus</h1>
+        <p style="font-size:1.1rem;color:var(--medium-gray);line-height:1.7;margin:0;max-width:650px">Comprehensive medical information about hantavirus infections, how they occur, what they feel like, and how healthcare providers diagnose and manage them.</p>
+      </div>
+    </section>
+    <div style="max-width:1100px;margin:0 auto;padding:4rem 1.5rem">
+      <section style="margin-bottom:4.5rem">
+        <h2 style="font-family:'DM Serif Display',serif;font-size:1.875rem;margin:0 0 1.25rem;color:var(--off-black)">Hantavirus Pulmonary Syndrome (HPS)</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem">
+          <div>
+            <p style="color:var(--medium-gray);line-height:1.75;margin-top:0">Hantavirus Pulmonary Syndrome (HPS) is a severe, sometimes fatal respiratory disease caused by infection with hantaviruses. It was first recognized in 1993 during an outbreak in the Four Corners region of the United States.</p>
+            <p style="color:var(--medium-gray);line-height:1.75">The Sin Nombre virus ("virus with no name" in Spanish) is the predominant hantavirus strain in North America. Deer mice serve as the primary reservoir and shed the virus throughout their lifetimes without becoming ill themselves.</p>
+            <p style="color:var(--medium-gray);line-height:1.75">HPS primarily affects the lungs, causing them to fill with fluid — a condition called pulmonary edema. This can cause breathing to become extremely difficult and lead to respiratory failure within hours in severe cases.</p>
+          </div>
+          <div style="background:var(--persian-green-light);border-radius:14px;padding:1.75rem">
+            <div style="font-weight:700;color:var(--persian-green-darker);margin-bottom:1rem;font-size:.9rem;text-transform:uppercase;letter-spacing:.06em">Key Facts</div>
+            ${keyfacts.map(([k,v])=>`<div style="display:flex;justify-content:space-between;gap:1rem;padding:.625rem 0;border-bottom:1px solid var(--persian-green-mid);font-size:.875rem">
+              <span style="color:var(--medium-gray);font-weight:500">${k}</span>
+              <span style="color:var(--off-black);font-weight:600;text-align:right">${v}</span></div>`).join("")}
+          </div>
+        </div>
+      </section>
+
+      <section style="margin-bottom:4.5rem">
+        <div class="section-tag">Clinical Progression</div>
+        <h2 style="font-family:'DM Serif Display',serif;font-size:1.875rem;margin:.5rem 0 2rem;color:var(--off-black)">Symptom Timeline</h2>
+        <div>
+          ${timeline.map((r,n)=>`<div style="display:flex;gap:1.5rem;margin-bottom:1rem">
+            <div style="display:flex;flex-direction:column;align-items:center;width:20px;flex-shrink:0;padding-top:1.5rem">
+              <div class="timeline-dot"></div>${n<3?'<div class="timeline-line" style="min-height:60px"></div>':""}
+            </div>
+            <div style="background:${r.color};border-radius:12px;padding:1.5rem;flex:1;margin-bottom:.5rem">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.75rem;flex-wrap:wrap;gap:.5rem">
+                <div><div style="font-weight:700;font-size:1rem;color:${r.textColor}">${r.phase}</div>
+                <div style="font-size:.8rem;color:var(--medium-gray);margin-top:.2rem">${r.range}</div></div>
+                <span style="font-size:.72rem;font-weight:700;background:#fff;padding:.25rem .625rem;border-radius:100px;color:${r.textColor}">Severity: ${r.severity}</span>
+              </div>
+              <ul style="margin:0;padding:0 0 0 1.25rem">${r.symptoms.map(s=>`<li style="font-size:.875rem;color:var(--dark-gray);line-height:1.65;margin-bottom:.25rem">${s}</li>`).join("")}</ul>
+            </div>
+          </div>`).join("")}
+        </div>
+        <div style="margin-top:1.5rem;background:var(--off-black);color:#fff;border-radius:12px;padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1rem">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--persian-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span style="font-size:.875rem;line-height:1.6"><strong>Critical:</strong> The transition from the prodromal to cardiopulmonary phase can happen very quickly — sometimes within hours. Anyone with risk factors and early symptoms should seek hospital care <em>before</em> breathing difficulty develops.</span>
+        </div>
+      </section>
+
+      <section style="margin-bottom:4.5rem">
+        <h2 style="font-family:'DM Serif Display',serif;font-size:1.875rem;margin:0 0 1.5rem;color:var(--off-black)">Diagnosis & Treatment</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem">
+          ${diag.map(d=>`<div class="card" style="padding:1.75rem">
+            <div style="width:44px;height:44px;background:var(--persian-green-light);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--persian-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v11m0 0a3 3 0 0 0 6 0m-6 0H3m12 0h6"/></svg>
+            </div>
+            <h3 style="margin:0 0 .75rem;color:var(--off-black);font-size:1.05rem">${d.title}</h3>
+            <p style="color:var(--medium-gray);font-size:.875rem;line-height:1.7;margin:0">${d.body}</p>
+          </div>`).join("")}
+        </div>
+      </section>
+
+      <section style="margin-bottom:4rem">
+        <div class="section-tag">Common Questions</div>
+        <h2 style="font-family:'DM Serif Display',serif;font-size:1.875rem;margin:.5rem 0 2rem;color:var(--off-black)">Frequently Asked Questions</h2>
+        <div id="faqList" style="display:flex;flex-direction:column;gap:.5rem">
+          ${faqs.map((f,i)=>`<div style="border:1.5px solid var(--light-gray);border-radius:10px;overflow:hidden">
+            <div class="accordion-header" data-faq="${i}" role="button" aria-expanded="false" style="border-radius:10px">
+              <span style="font-size:.95rem;padding-right:1rem">${f.q}</span>
+              <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--persian-green)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;transition:transform .2s"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="accordion-content" data-faqbody="${i}" style="display:none;border-top:1px solid var(--light-gray)">${f.a}</div>
+          </div>`).join("")}
+        </div>
+      </section>
+
+      <section style="background:var(--mint);border-radius:14px;padding:1.75rem 2rem">
+        <div style="font-weight:700;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--persian-green-darker);margin-bottom:1rem">Medical Sources & References</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:.625rem">
+          ${sources.map(s=>`<div style="display:flex;align-items:center;gap:.5rem;font-size:.82rem;color:var(--medium-gray)">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--persian-green)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>${s}
+          </div>`).join("")}
+        </div>
+      </section>
+    </div>
+  </main>`;
+}
+
+/* ---------- PREVENTION ---------- */
+function preventionPage(){
+  const home=[
+    {title:"Seal Entry Points",priority:"High Priority",steps:["Inspect foundation, walls, roof edges for gaps larger than ¼ inch","Fill holes with steel wool, then seal with caulk or foam","Install door sweeps on all exterior doors","Screen vents and chimney openings with fine wire mesh","Check where pipes enter the home — common entry points"]},
+    {title:"Eliminate Food Sources",priority:"High Priority",steps:["Store all food in metal or heavy plastic containers with lids","Never leave pet food or water out overnight","Keep garbage in tightly-sealed, rodent-proof containers","Clean up spilled birdseed around feeders","Remove clutter that provides nesting sites (boxes, debris)"]},
+    {title:"Safe Cleaning Protocol",priority:"Critical — Follow Exactly",steps:["Ventilate the area: open windows and doors for 30+ minutes","Put on rubber/latex gloves and an N95 respirator","Mix bleach solution: 1 part bleach to 9 parts water","Spray droppings, nests, and urine thoroughly — soak well","Wait 5 minutes, then wipe up with paper towels","NEVER vacuum or dry sweep rodent droppings","Disinfect all surfaces the rodents may have touched","Seal cleanup materials in double plastic bags before disposal"]},
+    {title:"Trapping & Removal",priority:"Recommended Method",steps:["Use snap traps — most effective and quick","Bait with peanut butter or nesting materials","Place traps along walls where rodents travel","Check traps daily wearing gloves","Soak dead rodent in bleach solution before disposal","Seal in plastic bag, place in trash or bury","Avoid touch-activated sticky traps (rodent may urinate when struggling)"]}
+  ];
+  const outdoor=[
+    {icon:"⛺",title:"Camping",tips:["Camp away from dense brush and woodpiles","Inspect cabin/tent before use for rodent signs","Store food in rodent-proof containers","Sleep on an elevated cot — avoid sleeping on bare ground","Air out enclosed spaces before entering"]},
+    {icon:"🏚️",title:"Opening Cabins",tips:["Open doors and windows before entering","Ventilate for at least 30 minutes","Check for rodent droppings or nesting material","Use bleach solution before cleaning any surfaces","Wear gloves and N95 while inspecting"]},
+    {icon:"🌲",title:"Hiking & Trail Work",tips:["Stay on trails and avoid contact with brush","Wear gloves when moving logs or debris","Do not handle rodents alive or dead","Wash hands frequently if touching soil","Avoid areas with visible rodent burrows"]},
+    {icon:"🚜",title:"Agricultural Work",tips:["Wear N95 respirator when working in barns/grain storage","Rodent-proof all grain and feed storage","Clean spilled grain promptly","Set traps in storage areas before harvest season","Report large rodent populations to local health dept"]}
+  ];
+  const gear=[
+    {item:"N95 Respirator",desc:"Must be properly fitted and seal around your face. Surgical masks are NOT sufficient for hantavirus protection.",required:true},
+    {item:"Rubber/Latex Gloves",desc:"Protects hands from direct contact with rodent material. Double-glove for heavy cleanup.",required:true},
+    {item:"Protective Eyewear",desc:"Safety glasses or goggles prevent splash of contaminated material reaching eyes.",required:false},
+    {item:"Coveralls / Tyvek Suit",desc:"For heavily infested areas, disposable coveralls prevent carrying contamination outside.",required:false},
+    {item:"Rubber Boots",desc:"Protects feet in areas with heavy contamination. Clean and disinfect after use.",required:false},
+    {item:"Disposable Plastic Bags",desc:"Double-bag all cleanup materials, dead rodents, and contaminated items before disposal.",required:true}
+  ];
+  const risk=[
+    {group:"Rural Homeowners",desc:"Living near fields or forests increases exposure to deer mice, especially during winter when rodents seek shelter."},
+    {group:"Agricultural Workers",desc:"Handling grain, hay, or working in barns and storage buildings creates frequent exposure to rodent habitats."},
+    {group:"Construction Workers",desc:"Disturbing soil and structures in rural areas can aerosolize dried rodent excrement."},
+    {group:"Hikers & Campers",desc:"Sleeping outdoors or in infrequently used cabins increases the chance of contact with contaminated materials."},
+    {group:"Utility Workers",desc:"Working in crawlspaces, attics, and rural infrastructure where rodents commonly nest."},
+    {group:"Military Personnel",desc:"Field exercises in endemic areas with sleeping on the ground in tents or improvised shelters."}
+  ];
+  const badge=(p)=>{const bg=p.includes("Critical")?"#fef2f2":p.includes("High")?"var(--persian-green-light)":"#f0fdf4";const c=p.includes("Critical")?"#dc2626":p.includes("High")?"var(--persian-green-darker)":"#166534";return `<span style="font-size:.7rem;font-weight:700;padding:.25rem .625rem;border-radius:100px;white-space:nowrap;background:${bg};color:${c}">${p}</span>`;};
+  return `
+  <main>
+    <section style="background:linear-gradient(135deg,var(--persian-green-darker) 0%,var(--persian-green) 100%);color:#fff;padding:4rem 1.5rem">
+      <div style="max-width:900px;margin:0 auto">
+        <div style="display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.15);border-radius:100px;padding:.375rem .875rem;margin-bottom:1.5rem;font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase">Prevention Guide</div>
+        <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(2rem,4vw,3rem);margin:0 0 1rem;font-weight:400">Protect Yourself From Hantavirus</h1>
+        <p style="font-size:1.1rem;line-height:1.7;margin:0;opacity:.92;max-width:600px">Since hantavirus has no vaccine or cure, prevention through rodent control and safe practices is your primary defense. These guidelines are based on current CDC recommendations.</p>
+      </div>
+    </section>
+    <div style="max-width:1100px;margin:0 auto;padding:4rem 1.5rem">
+      <div style="background:#fef3c7;border:1.5px solid #fbbf24;border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:3.5rem;display:flex;gap:1rem;align-items:flex-start">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <div><div style="font-weight:700;color:#92400e;margin-bottom:.375rem">Before You Begin Any Cleanup</div>
+        <div style="font-size:.875rem;color:#78350f;line-height:1.65">If you find a large rodent infestation in a confined space (attic, crawlspace, cabin), strongly consider hiring a professional pest control service. Do NOT enter or disturb heavily infested areas without proper protective equipment.</div></div>
+      </div>
+
+      <section style="margin-bottom:4.5rem">
+        <div class="section-tag">Indoor Safety</div>
+        <h2 style="font-family:'DM Serif Display',serif;font-size:1.875rem;margin:.5rem 0 2rem;color:var(--off-black)">Protecting Your Home</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.5rem">
+          ${home.map(r=>`<div class="card" style="padding:1.75rem">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem">
+              <h3 style="margin:0;font-size:1.05rem;color:var(--off-black)">${r.title}</h3>${badge(r.priority)}
+            </div>
+            <ul style="margin:0;padding:0 0 0 1.125rem;display:flex;flex-direction:column;gap:.5rem">${r.steps.map(s=>`<li style="font-size:.855rem;color:var(--medium-gray);line-height:1.6">${s}</li>`).join("")}</ul>
+          </div>`).join("")}
+        </div>
+      </section>
+
+      <section style="margin-bottom:4.5rem">
+        <div class="section-tag">Outdoor Safety</div>
+        <h2 style="font-family:'DM Serif Display',serif;font-size:1.875rem;margin:.5rem 0 2rem;color:var(--off-black)">Staying Safe Outdoors</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.25rem">
+          ${outdoor.map(r=>`<div class="card" style="padding:1.5rem">
+            <div style="font-size:1.75rem;margin-bottom:.75rem">${r.icon}</div>
+            <h3 style="margin:0 0 .875rem;font-size:1.025rem;color:var(--off-black)">${r.title}</h3>
+            <ul style="margin:0;padding:0 0 0 1.125rem;display:flex;flex-direction:column;gap:.375rem">${r.tips.map(t=>`<li style="font-size:.845rem;color:var(--medium-gray);line-height:1.6">${t}</li>`).join("")}</ul>
+          </div>`).join("")}
+        </div>
+      </section>
+
+      <section style="margin-bottom:4.5rem">
+        <div class="section-tag">Protective Equipment</div>
+        <h2 style="font-family:'DM Serif Display',serif;font-size:1.875rem;margin:.5rem 0 1.5rem;color:var(--off-black)">What to Wear</h2>
+        <div style="background:var(--persian-green-light);border-radius:16px;padding:2rem">
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.25rem">
+            ${gear.map(r=>`<div style="background:#fff;border-radius:10px;padding:1.25rem;border:${r.required?"2px solid var(--persian-green)":"1px solid var(--light-gray)"}">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.5rem">
+                <div style="font-weight:700;font-size:.925rem;color:var(--off-black)">${r.item}</div>
+                ${r.required?'<span style="font-size:.65rem;background:var(--persian-green);color:#fff;padding:.2rem .5rem;border-radius:100px;font-weight:700;letter-spacing:.04em">REQUIRED</span>':""}
+              </div>
+              <div style="font-size:.82rem;color:var(--medium-gray);line-height:1.6">${r.desc}</div>
+            </div>`).join("")}
+          </div>
+        </div>
+      </section>
+
+      <section style="margin-bottom:4rem">
+        <h2 style="font-family:'DM Serif Display',serif;font-size:1.875rem;margin:0 0 1.5rem;color:var(--off-black)">Who Is at Highest Risk?</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem">
+          ${risk.map(r=>`<div style="display:flex;gap:.875rem;padding:1rem;border:1px solid var(--light-gray);border-radius:10px;background:#fff">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--persian-green);flex-shrink:0;margin-top:6px"></div>
+            <div><div style="font-weight:700;font-size:.9rem;color:var(--off-black);margin-bottom:.3rem">${r.group}</div>
+            <div style="font-size:.825rem;color:var(--medium-gray);line-height:1.6">${r.desc}</div></div>
+          </div>`).join("")}
+        </div>
+      </section>
+
+      <div style="background:var(--mint);border:1.5px solid var(--persian-green-mid);border-radius:14px;padding:2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem">
+        <div>
+          <div style="font-weight:700;color:var(--off-black);margin-bottom:.375rem">Print This Guide</div>
+          <div style="font-size:.875rem;color:var(--medium-gray)">Download or print this prevention guide for offline reference or to share with your community.</div>
+        </div>
+        <button onclick="window.print()" class="btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Print Guide
+        </button>
+      </div>
+    </div>
+  </main>`;
+}
+
+/* ---------- NEWS / INFO HUB ---------- */
+function newsPage(){
+  const cards=[
+    {tag:"Disease Information",title:"Understanding Hantavirus Pulmonary Syndrome",desc:"Learn about HPS, the severe respiratory illness caused by hantaviruses found in North America.",button:"Read More",href:"#/about",external:false},
+    {tag:"Disease Information",title:"Andes Virus: Person-to-Person Hantavirus",desc:"Andes virus is unique among hantaviruses for its ability to spread between people. Learn about this South American hantavirus.",button:"Learn at CDC",href:"https://www.cdc.gov/hantavirus/about/andes-virus.html",external:true},
+    {tag:"Prevention",title:"Rodent Control & Home Safety",desc:"Evidence-based guidelines for preventing hantavirus exposure through proper rodent control measures.",button:"View Prevention Guide",href:"#/prevention",external:false},
+    {tag:"Prevention",title:"Safe Cleanup Procedures",desc:"Step-by-step protocols for safely cleaning areas with rodent activity.",button:"Read Protocols",href:"#/prevention",external:false},
+    {tag:"Travel",title:"Travel Health Considerations",desc:"Important information for travelers to areas where hantaviruses are endemic.",button:"CDC Travel Health",href:"https://wwwnc.cdc.gov/travel",external:true},
+    {tag:"Clinical",title:"Healthcare Provider Resources",desc:"Clinical guidance for healthcare providers on hantavirus disease recognition and management.",button:"View Resources",href:"#/resources",external:false}
+  ];
+  const official=[
+    {label:"CDC Hantavirus Outbreak Updates",url:"https://www.cdc.gov/hantavirus/situation-summary/index.html"},
+    {label:"CDC Health Alert Network",url:"https://www.cdc.gov/han/index.html"},
+    {label:"WHO Disease Outbreak News",url:"https://www.who.int/emergencies/disease-outbreak-news"},
+    {label:"NIH Hantavirus Research",url:"https://www.niaid.nih.gov/diseases-conditions/hantaviruses"},
+    {label:"WHO Hantavirus Fact Sheet",url:"https://www.who.int/news-room/fact-sheets/detail/hantavirus"}
+  ];
+  return `
+  <main>
+    <section style="background:var(--mint);border-bottom:1px solid var(--persian-green-mid);padding:3.5rem 1.5rem">
+      <div style="max-width:900px;margin:0 auto">
+        <div class="section-tag">Information Hub</div>
+        <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(2rem,4vw,3rem);margin:.5rem 0 1rem;color:var(--off-black)">Hantavirus Information Hub</h1>
+        <p style="font-size:1.05rem;color:var(--medium-gray);line-height:1.7;margin:0;max-width:600px">Educational resources and links to official sources</p>
+      </div>
+    </section>
+    <div style="max-width:1100px;margin:0 auto;padding:4rem 1.5rem">
+      <div style="background:var(--persian-green);border-radius:16px;padding:2rem 2.5rem;margin-bottom:3rem;color:#fff">
+        <h2 style="font-family:'DM Serif Display',serif;font-size:1.5rem;margin:0 0 .75rem;font-weight:400">Looking for Current Outbreak Information?</h2>
+        <p style="opacity:.95;line-height:1.7;margin:0 0 1.5rem;font-size:.95rem;max-width:650px">This website does not provide real-time outbreak data. For active alerts, current case counts, and the latest hantavirus information, please visit the official CDC Hantavirus page.</p>
+        <a href="https://www.cdc.gov/hantavirus/situation-summary/index.html" target="_blank" rel="noopener noreferrer" class="btn-primary" style="background:#fff;color:var(--persian-green-darker);font-weight:700">Visit CDC Hantavirus Page →</a>
+      </div>
+      <div class="hub-grid" style="display:grid;grid-template-columns:1fr 340px;gap:3rem;align-items:start">
+        <div>
+          <div class="section-tag">Educational Content</div>
+          <h2 style="font-family:'DM Serif Display',serif;font-size:1.75rem;margin:.5rem 0 2rem;color:var(--off-black)">Learn About Hantavirus</h2>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem">
+            ${cards.map(r=>`<div class="card" style="padding:1.75rem;display:flex;flex-direction:column">
+              <span style="background:var(--persian-green-light);color:var(--persian-green-darker);font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:.25rem .625rem;border-radius:100px;align-self:flex-start;margin-bottom:.875rem">${r.tag}</span>
+              <h3 style="margin:0 0 .625rem;font-size:1.05rem;font-weight:700;color:var(--off-black);line-height:1.35;font-family:'DM Serif Display',serif">${r.title}</h3>
+              <p style="margin:0 0 1.25rem;font-size:.875rem;color:var(--medium-gray);line-height:1.7;flex:1">${r.desc}</p>
+              <a href="${r.href}" ${r.external?'target="_blank" rel="noopener noreferrer"':""} class="btn-outline" style="font-size:.85rem;padding:.5rem 1rem;justify-content:center;width:100%">${r.button}${r.external?' ↗':""}</a>
+            </div>`).join("")}
+          </div>
+        </div>
+        <div style="position:sticky;top:84px;display:flex;flex-direction:column;gap:1.25rem">
+          <div style="background:#fff;border:1.5px solid var(--light-gray);border-radius:14px;padding:1.5rem">
+            <div style="font-weight:700;color:var(--off-black);margin-bottom:.375rem;font-size:.95rem">Official Sources</div>
+            <p style="font-size:.8rem;color:var(--medium-gray);margin:0 0 1.25rem;line-height:1.55">For real-time updates, always check authoritative sources:</p>
+            ${official.map(r=>`<a href="${r.url}" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;justify-content:space-between;padding:.625rem 0;border-bottom:1px solid var(--light-gray);color:var(--persian-green);font-size:.85rem;font-weight:500">${r.label}
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg></a>`).join("")}
+          </div>
+        </div>
+      </div>
+      <div style="background:var(--persian-green-light);border-radius:14px;padding:1.75rem 2rem;margin-top:3rem;font-size:.875rem;color:var(--persian-green-darker);line-height:1.7">
+        <strong style="display:block;margin-bottom:.375rem">Disclaimer</strong>
+        This website provides educational content only. We do not publish real-time outbreak data, case counts, or active alerts. For current outbreak information and case statistics, please consult the CDC, WHO, and your local health department directly. Information on this site should not replace consultation with healthcare professionals.
+      </div>
+    </div>
+  </main>`;
+}
+
+/* ---------- RESOURCES ---------- */
+function resourcesPage(){
+  const sheets=[
+    {title:"Hantavirus: What You Need to Know",audience:"General Public",pages:"2 pages",icon:"📄",desc:"Simple overview of hantavirus, symptoms, and when to seek help. Suitable for community distribution."},
+    {title:"Safe Rodent Cleanup Procedures",audience:"General Public",pages:"1 page",icon:"📋",desc:"Step-by-step instructions for safely cleaning up after a rodent infestation at home."},
+    {title:"HPS Clinical Management Guide",audience:"Healthcare Providers",pages:"8 pages",icon:"🏥",desc:"Diagnostic criteria, differential diagnosis, treatment protocols, and ICU management for HPS."},
+    {title:"Hantavirus Surveillance Reporting",audience:"Public Health Officials",pages:"4 pages",icon:"📊",desc:"Reporting requirements, case definitions, and laboratory submission guidance for health departments."},
+    {title:"Occupational Exposure Risk Assessment",audience:"Employers / Safety Officers",pages:"6 pages",icon:"⚠️",desc:"OSHA-aligned risk assessment tool and control measures for agricultural, construction, and utility industries."},
+    {title:"Elementary School Curriculum Guide",audience:"Educators (Grades 3–6)",pages:"12 pages",icon:"🎒",desc:"Age-appropriate lesson plans, activities, and handouts teaching rodent avoidance and hygiene."}
+  ];
+  const ext=[
+    {org:"CDC",title:"Hantavirus Pulmonary Syndrome (HPS)",url:"https://www.cdc.gov/hantavirus",desc:"Primary US government resource for HPS information, statistics, and professional guidance."},
+    {org:"NIH / NIAID",title:"Hantaviruses Research Program",url:"https://www.niaid.nih.gov/diseases-conditions/hantaviruses",desc:"Ongoing research initiatives, clinical trials, and scientific publications."},
+    {org:"WHO",title:"Hantavirus Disease Fact Sheet",url:"https://www.who.int/news-room/fact-sheets/detail/hantavirus",desc:"Global perspective on hantavirus disease, including Eurasian strains causing HFRS."},
+    {org:"OSHA",title:"Hantavirus Occupational Safety",url:"https://www.osha.gov/hantavirus",desc:"Workplace guidance for employers and workers in high-risk occupational settings."},
+    {org:"EPA",title:"Rodent Control and Hantavirus",url:"https://www.epa.gov/rodenticides/hantavirus",desc:"Information on rodenticide use and integrated pest management approaches."},
+    {org:"NPS",title:"Hantavirus in National Parks",url:"https://www.nps.gov/subjects/hantavirus",desc:"Park-specific hantavirus information for visitors, including Yosemite and other endemic park areas."}
+  ];
+  const clinical=["Case definition and diagnostic criteria","Laboratory submission procedures (CDC Arbovirus Diagnostics)","ICD-10-CM code: B33.4 (Hantavirus infection)","Notifiable disease reporting requirements by state","ICU management protocols and ECMO criteria"];
+  return `
+  <main>
+    <section style="background:var(--mint);border-bottom:1px solid var(--persian-green-mid);padding:3.5rem 1.5rem">
+      <div style="max-width:900px;margin:0 auto">
+        <div class="section-tag">Resource Library</div>
+        <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(2rem,4vw,3rem);margin:.5rem 0 1rem;color:var(--off-black)">Resources & Downloads</h1>
+        <p style="font-size:1.05rem;color:var(--medium-gray);line-height:1.7;margin:0;max-width:620px">Free educational materials, clinical references, and trusted external links for the public, healthcare professionals, and educators.</p>
+      </div>
+    </section>
+    <div style="max-width:1100px;margin:0 auto;padding:4rem 1.5rem">
+      <section style="margin-bottom:4.5rem">
+        <div class="section-tag">Downloads</div>
+        <h2 style="font-family:'DM Serif Display',serif;font-size:1.875rem;margin:.5rem 0 2rem;color:var(--off-black)">Fact Sheets & Brochures</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.25rem">
+          ${sheets.map(r=>`<div class="card" style="padding:1.5rem;display:flex;flex-direction:column">
+            <div style="display:flex;gap:1rem;margin-bottom:.875rem;align-items:flex-start">
+              <div style="font-size:1.75rem;flex-shrink:0">${r.icon}</div>
+              <div><div style="font-weight:700;font-size:.95rem;color:var(--off-black);line-height:1.35;margin-bottom:.25rem">${r.title}</div>
+              <div style="display:flex;gap:.5rem;align-items:center">
+                <span style="font-size:.72rem;background:var(--persian-green-light);color:var(--persian-green-darker);padding:.2rem .5rem;border-radius:100px;font-weight:600">${r.audience}</span>
+                <span style="font-size:.72rem;color:var(--medium-gray)">${r.pages}</span>
+              </div></div>
+            </div>
+            <p style="margin:0 0 1rem;font-size:.83rem;color:var(--medium-gray);line-height:1.65;flex:1">${r.desc}</p>
+            <button class="btn-outline" style="font-size:.82rem;padding:.5rem 1rem;justify-content:center;width:100%" onclick="window.print()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download PDF
+            </button>
+          </div>`).join("")}
+        </div>
+      </section>
+
+      <section style="margin-bottom:4.5rem">
+        <div class="section-tag">Trusted Sources</div>
+        <h2 style="font-family:'DM Serif Display',serif;font-size:1.875rem;margin:.5rem 0 2rem;color:var(--off-black)">External Resources</h2>
+        <div style="display:flex;flex-direction:column;gap:.75rem">
+          ${ext.map(r=>`<a href="${r.url}" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:1.25rem;padding:1.25rem 1.5rem;border:1.5px solid var(--light-gray);border-radius:12px;background:#fff">
+            <div style="flex-shrink:0;width:52px;height:52px;border-radius:10px;background:var(--persian-green-light);display:flex;align-items:center;justify-content:center">
+              <span style="font-weight:800;font-size:.75rem;color:var(--persian-green-darker);text-align:center;line-height:1.2">${r.org}</span>
+            </div>
+            <div style="flex:1;min-width:0">
+              <div style="font-weight:700;color:var(--off-black);margin-bottom:.25rem;font-size:.95rem">${r.title}</div>
+              <div style="font-size:.83rem;color:var(--medium-gray);line-height:1.55">${r.desc}</div>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--persian-green)" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg>
+          </a>`).join("")}
+        </div>
+      </section>
+
+      <section style="background:linear-gradient(135deg,var(--persian-green-darker),var(--persian-green));border-radius:20px;padding:2.5rem;color:#fff">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;align-items:center">
+          <div>
+            <div style="font-weight:700;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;opacity:.8;margin-bottom:.75rem">Healthcare Professionals</div>
+            <h2 style="font-family:'DM Serif Display',serif;font-size:1.75rem;margin:0 0 1rem;font-weight:400">Clinical Resources & Reporting</h2>
+            <p style="opacity:.9;line-height:1.7;margin:0 0 1.5rem;font-size:.9rem">HPS is a nationally notifiable condition. Healthcare providers are required to report suspected or confirmed cases to their state or local health department within 24 hours.</p>
+            <a href="#/contact" class="btn-primary" style="background:#fff;color:var(--persian-green-darker);font-weight:700">Healthcare Provider Contact</a>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:.75rem">
+            ${clinical.map(c=>`<div style="display:flex;gap:.75rem;align-items:flex-start;background:rgba(255,255,255,.1);border-radius:8px;padding:.75rem 1rem">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"/></svg>
+              <span style="font-size:.85rem;opacity:.95">${c}</span>
+            </div>`).join("")}
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>`;
+}
+
+/* ---------- CONTACT (social removed, email added) ---------- */
+function contactPage(){
+  return `
+  <main>
+    <section style="background:var(--mint);border-bottom:1px solid var(--persian-green-mid);padding:3.5rem 1.5rem">
+      <div style="max-width:900px;margin:0 auto;text-align:center">
+        <div class="section-tag">Connect</div>
+        <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(2rem,4vw,3rem);margin:.5rem 0 1rem;color:var(--off-black)">Get in Touch</h1>
+        <p style="font-size:1.05rem;color:var(--medium-gray);line-height:1.7;margin:0 auto;max-width:550px">Have a question or feedback about our educational content? Send us an email and we'll get back to you.</p>
+      </div>
+    </section>
+    <div style="max-width:800px;margin:0 auto;padding:4rem 1.5rem">
+      <section style="margin-bottom:3.5rem">
+        <div class="card" style="padding:2.75rem 2.25rem;text-align:center">
+          <div style="width:64px;height:64px;border-radius:16px;background:var(--persian-green-light);display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--persian-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+          </div>
+          <div style="font-weight:700;font-size:1.1rem;color:var(--off-black);margin-bottom:.25rem">Email Us</div>
+          <p style="color:var(--medium-gray);font-size:.9rem;line-height:1.6;margin:.5rem auto 1.5rem;max-width:420px">For general questions, feedback, or educational partnership inquiries, reach us by email. Please note we cannot provide medical advice.</p>
+          <a href="mailto:contact@hantavirusinfo.com" class="btn-primary" style="justify-content:center;gap:.5rem">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+            contact@hantavirusinfo.com
+          </a>
+        </div>
+      </section>
+
+      <section style="margin-bottom:3rem">
+        <div style="border:2px solid var(--persian-green);border-radius:16px;padding:2rem 2.25rem">
+          <h2 style="font-family:'DM Serif Display',serif;font-size:1.375rem;margin:0 0 .75rem;color:var(--off-black)">For Medical Concerns</h2>
+          <p style="color:var(--medium-gray);font-size:.925rem;line-height:1.7;margin:0 0 1.25rem">We are an educational resource and cannot provide medical advice or respond to health emergencies. If you suspect hantavirus exposure or are experiencing symptoms, please:</p>
+          <ul style="margin:0 0 1.5rem;padding-left:1.25rem;display:flex;flex-direction:column;gap:.5rem">
+            <li style="color:var(--medium-gray);font-size:.9rem;line-height:1.6">Seek immediate medical attention from a healthcare provider</li>
+            <li style="color:var(--medium-gray);font-size:.9rem;line-height:1.6">Visit the <a href="https://www.cdc.gov/hantavirus/" target="_blank" rel="noopener noreferrer" style="color:var(--persian-green);font-weight:600">CDC Hantavirus page</a> for official information</li>
+            <li style="color:var(--medium-gray);font-size:.9rem;line-height:1.6">Contact your local health department</li>
+          </ul>
+          <a href="https://www.cdc.gov/hantavirus/" target="_blank" rel="noopener noreferrer" class="btn-primary">Visit CDC.gov ↗</a>
+        </div>
+      </section>
+
+      <section>
+        <div style="background:var(--persian-green-light);border-radius:16px;padding:2rem 2.25rem">
+          <h2 style="font-family:'DM Serif Display',serif;font-size:1.375rem;margin:0 0 .75rem;color:var(--off-black)">About This Website</h2>
+          <p style="color:var(--persian-green-darker);font-size:.9rem;line-height:1.7;margin:0">HantavirusInfo is an independent educational resource. We are not affiliated with the CDC, WHO, NIH, or any government health agency. All information should be verified with official sources.</p>
+        </div>
+      </section>
+    </div>
+  </main>`;
+}
+
+/* ---------- router ---------- */
+const ROUTES={
+  "":homePage,"#/":homePage,"#/about":aboutPage,"#/prevention":preventionPage,
+  "#/news":newsPage,"#/resources":resourcesPage,"#/contact":contactPage
+};
+
+function buildNav(){
+  document.getElementById("desktopNav").innerHTML=NAV.map(n=>`<a href="${n.to}" class="nav-link" data-to="${n.to}">${n.label}</a>`).join("");
+  document.getElementById("mobileNav").innerHTML=NAV.map(n=>`<a href="${n.to}" data-to="${n.to}">${n.label}</a>`).join("");
+}
+
+function closeMobile(){document.getElementById("mobileOverlay").classList.remove("open");document.getElementById("mobilePanel").classList.remove("open");}
+function openMobile(){document.getElementById("mobileOverlay").classList.add("open");document.getElementById("mobilePanel").classList.add("open");}
+
+function setActive(hash){
+  document.querySelectorAll("[data-to]").forEach(a=>{
+    a.classList.toggle("active", a.dataset.to===hash || (hash==="" && a.dataset.to==="#/"));
+  });
+}
+
+function render(){
+  let hash=location.hash||"#/";
+  const fn=ROUTES[hash]||homePage;
+  document.getElementById("app").innerHTML=fn();
+  window.scrollTo(0,0);
+  setActive(hash);
+  closeMobile();
+  if(fn===homePage){checked=new Set();renderSymptoms();}
+  if(fn===aboutPage){wireFaq();}
+  wireHubGrid();
+}
+
+function wireFaq(){
+  document.querySelectorAll(".accordion-header").forEach(hd=>{
+    hd.onclick=()=>{
+      const i=hd.dataset.faq;
+      const body=document.querySelector(`[data-faqbody="${i}"]`);
+      const open=body.style.display!=="none";
+      body.style.display=open?"none":"block";
+      hd.setAttribute("aria-expanded",String(!open));
+      const ch=hd.querySelector(".faq-chevron");
+      if(ch)ch.style.transform=open?"none":"rotate(180deg)";
+      hd.style.borderRadius=open?"10px":"10px 10px 0 0";
+    };
+  });
+}
+
+/* make the info-hub 2-col grid stack on small screens */
+function wireHubGrid(){
+  const g=document.querySelector(".hub-grid");
+  if(g){const stack=window.innerWidth<820;g.style.gridTemplateColumns=stack?"1fr":"1fr 340px";}
+}
+
+window.addEventListener("hashchange",render);
+window.addEventListener("resize",wireHubGrid);
+document.getElementById("hamburgerBtn").onclick=openMobile;
+document.getElementById("mobileClose").onclick=closeMobile;
+document.getElementById("mobileOverlay").onclick=(e)=>{if(e.target.id==="mobileOverlay")closeMobile();};
+
+buildNav();
+render();
+</script>
+</body>
+</html>
